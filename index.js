@@ -1,7 +1,21 @@
 const http = require('http')
+const fs = require('fs')
+const path = require('path')
 
 const server = http.createServer((req, res) => {
-    res.end('<h1>Hello Node.JS</h1>')
+    
+    if (req.url === '/') {
+        fs.readFile(path.join(__dirname, 'publick', 'index.html'), (err, data) => {
+            if (err) {
+                throw err
+            }
+            res.writeHead(200, {
+                'Content-Type': 'text/html'
+            })
+            res.end(data)
+        })
+    }
+
 })
 
 server.listen(3000, () => {
