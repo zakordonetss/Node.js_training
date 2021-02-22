@@ -26,9 +26,9 @@ const server = http.createServer((req, res) => {
     //     })
     // }
 
-    let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url)
-    let ext = path.extname(filePath)
-    let contentType = 'text/html'
+    let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+    let ext = path.extname(filePath);
+    let contentType = 'text/html';
 
     switch (ext) {
         case '.css':
@@ -39,12 +39,13 @@ const server = http.createServer((req, res) => {
             break
         default:
             contentType = 'text/html'
-    }
+    };
 
     if (!ext) {
         filePath += '.html'
-    }
-    console.log(filePath);
+    };
+
+    console.log(filePath, '+', ext);
 
     fs.readFile(filePath, (err, content) => {
         if (err) {
@@ -65,10 +66,12 @@ const server = http.createServer((req, res) => {
             }) 
             res.end(content)
         }
-    })
+    });
 
 })
 
-server.listen(3000, () => {
-    console.log('Server has been started...');
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+    console.log(`Server has been started at port: ${PORT}...`);
 })
